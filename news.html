@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News</title>
+</head>
+<body>
+    <h1>Latest News</h1>
+    <div id="newsContainer">
+        <!-- Aquí se mostrarán las noticias -->
+    </div>
+
+    <script>
+        // Realizar una solicitud GET al backend para obtener las noticias
+        fetch('show_news.php')
+            .then(response => response.json())
+            .then(data => {
+                // Manipular los datos recibidos y mostrar las noticias en el contenedor
+                const newsContainer = document.getElementById('newsContainer');
+                data.forEach(noticia => {
+                    const noticiaElement = document.createElement('div');
+                    noticiaElement.innerHTML = `
+                        <h2>${noticia.Titulo}</h2>
+                        <p>${noticia.Descripcion}</p>
+                        <p>Date: ${noticia.Fecha}</p>
+                        <p>URL: <a href="${noticia.URL}">${noticia.URL}</a></p>
+                        <!-- end show post -->
+                    `;
+                    newsContainer.appendChild(noticiaElement);
+                });
+            })
+            .catch(error => console.error('Error al obtener las noticias:', error));
+    </script>
+</body>
+</html>
